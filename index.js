@@ -14,13 +14,20 @@ app.get('/users', (req, res) => {
 })
 //user details (specific index)
 app.get('/users/:usersParams', (req, res) => {
-    console.log(req.params.usersParams)
+    //console.log(req.params.usersParams)
     res.send(db.users[req.params.usersParams])
 })
 //user details (specific index) and schedule details
 app.get('/users/:usersParams/schedules', (req, res) => {
-    console.log(req.params.usersParams)
-    res.send(db.schedules[req.params.usersParams])
+    var obj = db.schedules
+    var result = []
+    for (let i=0; i<obj.length; i++) {
+        if(db.schedules[i].user_id == req.params.usersParams) {
+            console.log(db.schedules[i])
+            result.push(db.schedules[i])
+        }
+    }
+    res.send(result)
 })
 //schedules path
 app.get('/schedules', (req, res) => {
